@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { Table } from 'antd';
+import FilteredTable from './components/FilteredTable/FilteredTable';
+import SearchComponent from './components/SearchComponent/SearchComponent';
+import SearchComponentTable from './components/SearchComponentTable/SearchComponentTable';
+
+import data from './mocks/data.json';
 
 function App() {
+  console.log(
+    'component array',
+    new Array(
+      (
+        <SearchComponent
+          title='test'
+          dataIndex='Üniversite Adı'
+          key='Üniversite Adı'
+          width='25%'
+        />
+      ).props
+    )
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <SearchComponentTable />
+      <Table
+        columns={
+          new Array(
+            (
+              <SearchComponent
+                title='test'
+                dataIndex='Üniversite Adı'
+                key='Üniversite Adı'
+                width='25%'
+              />
+            )
+          ).props
+        }
+        dataSource={data}
+      />
+
+      <FilteredTable />
     </div>
   );
 }
