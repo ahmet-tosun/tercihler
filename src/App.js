@@ -6,7 +6,6 @@ import SearchComponentTable from './components/SearchComponentTable/SearchCompon
 import data from './mocks/data.json';
 
 function App() {
-  
   return (
     <div>
       <SearchComponentTable />
