@@ -164,8 +164,6 @@ const SearchComponentTable = () => {
       key: 'En Küçük Puan',
       width: '30%',
       ...genericFilter('En Küçük Puan', greaterThanFilter, numberDropdown),
-      defaultSortOrder: 'descend',
-      sorter: (a, b) => a['En Küçük Puan'] - b['En Küçük Puan'],
     },
   ];
 
