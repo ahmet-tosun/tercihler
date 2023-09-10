@@ -5,7 +5,7 @@ import { Button, Input, Space, Table } from 'antd';
 
 import data from '../../mocks/data.json';
 
-const SearchComponentTable = (props) => {
+const SearchComponentTable = () => {
   const [searchAlani, setSearchAlani] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
@@ -19,113 +19,109 @@ const SearchComponentTable = (props) => {
     setSearchAlani('');
   };
 
-  const textDropdown = (dataIndex) => ({
-    setSelectedKeys,
-    selectedKeys,
-    confirm,
-    clearFilters,
-    close,
-  }) => (
-    <div
-      style={{
-        padding: 8,
-      }}
-      onKeyDown={(e) => e.stopPropagation()}
-    >
-      <Input
-        ref={searchInput}
-        placeholder={`Search ${dataIndex}`}
-        value={selectedKeys[0]}
-        onChange={(e) =>
-          setSelectedKeys(e.target.value ? [e.target.value] : [])
-        }
-        onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-        style={{
-          marginBottom: 8,
-          display: 'block',
-        }}
-      />
-      <Space>
-        <Button
-          type='primary'
-          onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          icon={<SearchOutlined />}
-          size='small'
+  const textDropdown =
+    (dataIndex) =>
+    ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) =>
+      (
+        <div
           style={{
-            width: 90,
+            padding: 8,
           }}
+          onKeyDown={(e) => e.stopPropagation()}
         >
-          Search
-        </Button>
-        <Button
-          onClick={() => clearFilters && handleReset(clearFilters)}
-          size='small'
-          style={{
-            width: 90,
-          }}
-        >
-          Reset
-        </Button>
-        <Button
-          type='link'
-          size='small'
-          onClick={() => {
-            confirm({
-              closeDropdown: false,
-            });
-            setSearchAlani(selectedKeys[0]);
-            setSearchedColumn(dataIndex);
-          }}
-        >
-          Filter
-        </Button>
-        <Button
-          type='link'
-          size='small'
-          onClick={() => {
-            close();
-          }}
-        >
-          close
-        </Button>
-      </Space>
-    </div>
-  )
+          <Input
+            ref={searchInput}
+            placeholder={`Search ${dataIndex}`}
+            value={selectedKeys[0]}
+            onChange={(e) =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            style={{
+              marginBottom: 8,
+              display: 'block',
+            }}
+          />
+          <Space>
+            <Button
+              type='primary'
+              onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+              icon={<SearchOutlined />}
+              size='small'
+              style={{
+                width: 90,
+              }}
+            >
+              Search
+            </Button>
+            <Button
+              onClick={() => clearFilters && handleReset(clearFilters)}
+              size='small'
+              style={{
+                width: 90,
+              }}
+            >
+              Reset
+            </Button>
+            <Button
+              type='link'
+              size='small'
+              onClick={() => {
+                confirm({
+                  closeDropdown: false,
+                });
+                setSearchAlani(selectedKeys[0]);
+                setSearchedColumn(dataIndex);
+              }}
+            >
+              Filter
+            </Button>
+            <Button
+              type='link'
+              size='small'
+              onClick={() => {
+                close();
+              }}
+            >
+              close
+            </Button>
+          </Space>
+        </div>
+      );
 
-  const numberDropdown = (dataIndex) => ({
-    setSelectedKeys,
-    selectedKeys,
-    confirm,
-    clearFilters,
-    close,
-  }) => (
-      <div style={{ padding: 8, }} onKeyDown={(e) => e.stopPropagation()} >
-      <Input
-        ref={searchInput}
-        placeholder={`Search ${dataIndex}`}
-        value={selectedKeys[0]}
-        onChange={(e) =>
-          setSelectedKeys(e.target.value ? [e.target.value] : [])
-        }
-        onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-        style={{
-          marginBottom: 8,
-          display: 'block',
-        }}
-      />
+  const numberDropdown =
+    (dataIndex) =>
+    ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) =>
+      (
+        <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+          <Input
+            ref={searchInput}
+            placeholder={`Search ${dataIndex}`}
+            value={selectedKeys[0]}
+            onChange={(e) =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            style={{
+              marginBottom: 8,
+              display: 'block',
+            }}
+          />
+        </div>
+      );
 
-    </div>
-  )
+  const greaterThanFilter = (value, record, dataIndex) =>
+    parseFloat(record[dataIndex]) > parseFloat(value);
+  const lessThanFilter = (value, record, dataIndex) =>
+    parseFloat(record[dataIndex]) < parseFloat(value);
+  const roundedValueEqual = (value, record, dataIndex) =>
+    parseInt(record[dataIndex]) === parseInt(value);
+  const includesFilter = (value, record, dataIndex) =>
+    record[dataIndex].toString().toLowerCase().includes(value.toLowerCase());
 
-  const greaterThanFilter = (value, record,dataIndex) => parseFloat(record[dataIndex]) > parseFloat(value);
-  const lessThanFilter = (value, record,dataIndex) => parseFloat(record[dataIndex]) < parseFloat(value);
-  const roundedValueEqual = (value, record,dataIndex) => parseInt(record[dataIndex]) == parseInt(value);
-  const includesFilter = (value, record,dataIndex) => record[dataIndex].toString().toLowerCase().includes(value.toLowerCase());
-  
   const genericFilter = (dataIndex, filterFunc, dropdownFunc) => ({
     filterDropdown: dropdownFunc(dataIndex),
-    onFilter: (value, record) =>
-      filterFunc(value,record,dataIndex),
+    onFilter: (value, record) => filterFunc(value, record, dataIndex),
     onFilterDropdownOpenChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current?.select(), 100);
@@ -147,28 +143,29 @@ const SearchComponentTable = (props) => {
       ),
   });
 
-    
   const columns = [
     {
       title: 'Üniversite Adı',
       dataIndex: 'Üniversite Adı',
       key: 'Üniversite Adı',
       width: '30%',
-      ...genericFilter('Üniversite Adı',includesFilter,textDropdown),
+      ...genericFilter('Üniversite Adı', includesFilter, textDropdown),
     },
     {
       title: 'Program Adı',
       dataIndex: 'Program Adı',
       key: 'Program Adı',
       width: '30%',
-      ...genericFilter('Program Adı',includesFilter,textDropdown),
+      ...genericFilter('Program Adı', includesFilter, textDropdown),
     },
     {
       title: 'En Küçük Puanı',
       dataIndex: 'En Küçük Puan',
       key: 'En Küçük Puan',
       width: '30%',
-      ...genericFilter('En Küçük Puan',greaterThanFilter,numberDropdown),
+      ...genericFilter('En Küçük Puan', greaterThanFilter, numberDropdown),
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a['En Küçük Puan'] - b['En Küçük Puan'],
     },
   ];
 
