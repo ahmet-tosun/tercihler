@@ -6,39 +6,10 @@ import SearchComponentTable from './components/SearchComponentTable/SearchCompon
 import data from './mocks/data.json';
 
 function App() {
-  console.log(
-    'component array',
-    new Array(
-      (
-        <SearchComponent
-          title='test'
-          dataIndex='Üniversite Adı'
-          key='Üniversite Adı'
-          width='25%'
-        />
-      ).props
-    )
-  );
+  
   return (
     <div>
       <SearchComponentTable />
-      <Table
-        columns={
-          new Array(
-            (
-              <SearchComponent
-                title='test'
-                dataIndex='Üniversite Adı'
-                key='Üniversite Adı'
-                width='25%'
-              />
-            )
-          ).props
-        }
-        dataSource={data}
-      />
-
-      <FilteredTable />
     </div>
   );
 }
